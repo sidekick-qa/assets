@@ -1,0 +1,174 @@
+openapi: "3.0.3"
+info:
+  description: "This is the api server schema."
+  version: "1.0.0"
+  title: "Sidekick Api"
+  termsOfService: "https://docs.answerbot.app/terms-of-service/"
+  contact:
+    email: "colethienes@sidekickqa.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "questions"
+  description: "A saved question for a website."
+- name: "queries"
+  description: "One query to the answer service."
+- name: "websites"
+  description: "A domain and account combination."
+- name: "accounts"
+  description: "An individual user account."
+- name: "slack"
+  description: "Resources for managing a slack integration."
+paths:
+  /questions:
+    post:
+      tags:
+      - "questions"
+      summary: "Add a question."
+      description: ""
+      operationId: "addQuestion"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid question"
+      security:
+      - accountId: []
+    put:
+      tags:
+      - "questions"
+      summary: "Update an existing question"
+      description: ""
+      operationId: "updateQuestion"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      responses:
+        "200":
+          description: "success"
+        "404":
+          description: "Question not found"
+  /questions/query:
+    post:
+      tags:
+      - "questions"
+      summary: "Get an answer for a given query."
+      description: ""
+      operationId: "queryQuestion"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                accountId:
+                  type: string
+                query:
+                  type: string
+                url:
+                  type: string
+                source:
+                  type: string
+                location:
+                  type: string
+                visitorId:
+                  type: string
+                ignoreCache:
+                  type: boolean
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        "400":
+          description: "Invalid status value"
+  /questions/search:
+    post:
+      tags:
+      - "questions"
+      summary: "Search through saved questions."
+      description: ""
+      operationId: "searchQuestions"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                is_certified:
+                  type: boolean
+                is_featured:
+                  type: boolean
+                text:
+                  type: string
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+        "400":
+          description: "Invalid status value"
+components:
+  securitySchemes:
+    accountId:
+      type: "apiKey"
+      name: "accountId"
+      in: "cookie"
+  schemas:
+    Question:
+      type: "object"
+      properties:
+        answer_text:
+            type: string
+            nullable: true
+        id:
+          type: string
+        is_certified:
+          type: boolean
+        is_featured:
+          type: boolean
+        link:
+          type: string
+          nullable: true
+        question_text:
+          type: string
+        search_links:
+          type: array
+          items:
+            type: string
+          nullable: true
+        search_snippets:
+          type: array
+          items:
+            type: string
+          nullable: true
+        search_titles:
+          type: array
+          items:
+            type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
