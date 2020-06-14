@@ -36,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyQuestionsPost'
+              $ref: '#/components/schemas/Question'
       responses:
         "200":
           description: "success"
@@ -63,7 +63,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseBodyQuestionsGet'
+                $ref: '#/components/schemas/Question'
         "404":
           description: "Question not found"
     patch:
@@ -84,7 +84,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyQuestionsPatch'
+              $ref: '#/components/schemas/Question'
       responses:
         "200":
           description: "success"
@@ -133,7 +133,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseBodyQueriesPost'
+                $ref: '#/components/schemas/Question'
         "400":
           description: "Invalid status value"
   /queries/history:
@@ -179,7 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseBodyWebsitesPost'
+                $ref: '#/components/schemas/Website'
         "400":
           description: "Invalid status value"
   /websites/{websiteId}:
@@ -201,7 +201,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyWebsitesPatch'
+              $ref: '#/components/schemas/Website'
       responses:
         "200":
           description: "success"
@@ -260,7 +260,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseBodyAccountsLoginPost'
+                $ref: '#/components/schemas/Account'
         "400":
           description: "Invalid status value"
   /accounts/switch/{accountId}:
@@ -282,7 +282,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseBodyAccountsSwitchPost'
+                $ref: '#/components/schemas/Account'
         "400":
           description: "Invalid status value"
   /slack/teams:
@@ -298,7 +298,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ResponseBodySlackTeamsPost'
+              $ref: '#/components/schemas/SlackTeam'
       responses:
         "200":
           description: "success"
@@ -323,7 +323,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseBodySlackTeamsGet'
+                $ref: '#/components/schemas/SlackTeam'
         "400":
           description: "Invalid status value"
     patch:
@@ -344,7 +344,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodySlackTeamsPatch'
+              $ref: '#/components/schemas/SlackTeam'
       responses:
         "200":
           description: "success"
@@ -715,10 +715,6 @@ components:
       properties:
         url:
           type: string
-    RequestBodyQuestionsPost:
-      $ref: '#/components/schemas/Question'
-    RequestBodyQuestionsPatch:
-      $ref: '#/components/schemas/Question'
     RequestBodyQuestionsSearchPost:
       type: object
       properties:
@@ -728,34 +724,16 @@ components:
           type: boolean
         text:
           type: string
-    RequestBodyWebsitesPatch:
-      $ref: '#/components/schemas/Website'
-    RequestBodySlackTeamsPatch:
-      $ref: '#/components/schemas/SlackTeam'
     ResponseBodyQuestionsSearchPost:
       type: array
       items:
         $ref: '#/components/schemas/Question'
-    ResponseBodyQuestionsGet:
-      $ref: '#/components/schemas/Question'
-    ResponseBodyQueriesPost:
-      $ref: '#/components/schemas/Question'
     ResponseBodyQueriesHistoryPost:
       type: array
       items:
         $ref: '#/components/schemas/Query'
-    ResponseBodyWebsitesPost:
-      $ref: '#/components/schemas/Website'
     ResponseBodyAccountsSearchPost:
       type: array
       items:
         $ref: '#/components/schemas/Account'
-    ResponseBodyAccountsLoginPost:
-      $ref: '#/components/schemas/Account'
-    ResponseBodyAccountsSwitchPost:
-      $ref: '#/components/schemas/Account'
-    ResponseBodySlackTeamsGet:
-      $ref: '#/components/schemas/SlackTeam'
-    ResponseBodySlackTeamsPost:
-      $ref: '#/components/schemas/SlackTeam'
 
