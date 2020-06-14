@@ -20,6 +20,8 @@ tags:
   description: "An individual user account."
 - name: "slack"
   description: "Resources for managing a slack integration."
+- name: "analytics"
+  description: "Metrics."
 paths:
   /questions:
     post:
@@ -34,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/RequestBodyQuestionsPost'
       responses:
         "200":
           description: "success"
@@ -42,28 +44,79 @@ paths:
           description: "Invalid question"
       security:
       - accountId: []
-    put:
+  /questions/{questionId}:
+    get:
+      tags:
+        - "questions"
+      summary: "Get a question."
+      description: ""
+      operationId: "getQuestion"
+      parameters:
+        - in: path
+          name: questionId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyQuestionsGet'
+        "404":
+          description: "Question not found"
+    patch:
       tags:
       - "questions"
       summary: "Update an existing question"
       description: ""
       operationId: "updateQuestion"
+      parameters:
+        - in: path
+          name: questionId
+          schema:
+            type: string
+          required: true
       requestBody:
         description: ""
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/RequestBodyQuestionsPatch'
       responses:
         "200":
           description: "success"
         "404":
           description: "Question not found"
-  /questions/query:
+  /questions/search:
     post:
       tags:
       - "questions"
+      summary: "Search through questions."
+      description: ""
+      operationId: "searchQuestions"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyQuestionsSearchPost'
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyQuestionsSearchPost'
+        "400":
+          description: "Invalid status value"
+  /queries:
+    post:
+      tags:
+      - "queries"
       summary: "Get an answer for a given query."
       description: ""
       operationId: "queryQuestion"
@@ -73,48 +126,326 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuestionsQueryRequestBody'
+              $ref: '#/components/schemas/RequestBodyQueriesPost'
       responses:
         "200":
           description: "success"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Question'
+                $ref: '#/components/schemas/ResponseBodyQueriesPost'
         "400":
           description: "Invalid status value"
-  /questions/search:
+  /queries/history:
     post:
       tags:
-      - "questions"
-      summary: "Search through saved questions."
+      - "queries"
+      summary: "Get most recent queries, with given filters."
       description: ""
-      operationId: "searchQuestions"
+      operationId: "getQueriesHistory"
       requestBody:
         description: ""
         required: true
         content:
           application/json:
             schema:
-              type: "object"
-              properties:
-                is_certified:
-                  type: boolean
-                is_featured:
-                  type: boolean
-                text:
-                  type: string
+              $ref: '#/components/schemas/RequestBodyQueriesHistoryGet'
       responses:
         "200":
           description: "success"
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Question'
+                $ref: '#/components/schemas/ResponseBodyQueriesHistoryPost'
         "400":
           description: "Invalid status value"
+  /websites:
+    post:
+      tags:
+      - "websites"
+      summary: "Add a website."
+      description: ""
+      operationId: "addWebsite"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyWebsitesPost'
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyWebsitesPost'
+        "400":
+          description: "Invalid status value"
+  /websites/{websiteId}:
+    patch:
+      tags:
+        - "websites"
+      summary: "Update a website."
+      description: ""
+      operationId: "updateWebsite"
+      parameters:
+        - in: path
+          name: websiteId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyWebsitesPatch'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+    delete:
+      tags:
+        - "websites"
+      summary: "Delete a website."
+      description: ""
+      operationId: "deleteWebsite"
+      parameters:
+      - in: path
+        name: websiteId
+        schema:
+          type: string
+        required: true
+        description: Website Id of the website to delete
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+  /accounts/search:
+    post:
+      tags:
+        - "accounts"
+      summary: "Get all accounts the user has access to."
+      description: ""
+      operationId: "getAccounts"
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyAccountsSearchPost'
+        "400":
+          description: "Invalid status value"
+  /accounts/login/{firebaseIdToken}:
+    post:
+      tags:
+        - "accounts"
+      summary: "Login with a firebase id token."
+      description: ""
+      operationId: "login"
+      parameters:
+        - in: path
+          name: firebaseIdToken
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyAccountsLoginPost'
+        "400":
+          description: "Invalid status value"
+  /accounts/switch/{accountId}:
+    post:
+      tags:
+        - "accounts"
+      summary: "Switch accounts (admin only)."
+      description: ""
+      operationId: "switchAccount"
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyAccountsSwitchPost'
+        "400":
+          description: "Invalid status value"
+  /slack/teams:
+    post:
+      tags:
+        - "slack"
+      summary: "Add slack integration."
+      description: ""
+      operationId: "addSlackTeam"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResponseBodySlackTeamsPost'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+  /slack/teams/{slackTeamId}:
+    get:
+      tags:
+        - "slack"
+      summary: "Get slack integration."
+      description: ""
+      operationId: "getSlackTeam"
+      parameters:
+        - in: path
+          name: slackTeamId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodySlackTeamsGet'
+        "400":
+          description: "Invalid status value"
+    patch:
+      tags:
+        - "slack"
+      summary: "Update slack integration."
+      description: ""
+      operationId: "updateSlackTeam"
+      parameters:
+        - in: path
+          name: slackTeamId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodySlackTeamsPatch'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+  /analytics/charts:
+    get:
+      tags:
+        - "analytics"
+      summary: "Get charts for an account."
+      description: ""
+      operationId: "getCharts"
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chart'
+        "400":
+          description: "Invalid status value"
+    post:
+      tags:
+        - "analytics"
+      summary: "Add an analytics chart."
+      description: ""
+      operationId: "addChart"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chart'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+  /analytics/charts/{chartId}:
+    patch:
+      tags:
+        - "analytics"
+      summary: "Update a chart."
+      description: ""
+      operationId: "updateChart"
+      parameters:
+        - in: path
+          name: chartId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chart'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+    delete:
+      tags:
+        - "analytics"
+      summary: "Delete a chart."
+      description: ""
+      operationId: "deleteChart"
+      parameters:
+        - in: path
+          name: chartId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+  /analytics/charts/data:
+    post:
+      tags:
+        - "analytics"
+      summary: "Get chart data."
+      description: ""
+      operationId: "getChartData"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChartMetrics'
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "Invalid status value"
+
 components:
   securitySchemes:
     accountId:
@@ -122,23 +453,27 @@ components:
       name: "accountId"
       in: "cookie"
   schemas:
-    QuestionsQueryRequestBody:
-      type: "object"
+
+    Account:
+      type: object
       properties:
-        accountId:
+        email:
           type: string
-        query:
+        id:
           type: string
-        url:
-          type: string
-        source:
-          type: string
-        location:
-          type: string
-        visitorId:
-          type: string
-        ignoreCache:
+        is_admin:
           type: boolean
+        name:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        photo_url:
+          type: string
+          nullable: true
+        provider:
+          type: string
     Question:
       type: "object"
       properties:
@@ -174,3 +509,253 @@ components:
         title:
           type: string
           nullable: true
+    Query:
+      type: object
+      properties:
+        answer_text:
+          type: string
+          nullable: true
+        id:
+          type: string
+        link:
+          type: string
+          nullable: true
+        question_text:
+          type: string
+        source:
+          type: string
+        timestamp:
+          type: integer
+        visitor_id:
+          type: string
+          nullable: true
+        was_helpful:
+          type: boolean
+          nullable: true
+    SlackTeam:
+      type: object
+      properties:
+        access_token:
+          type: string
+        account_id:
+          type: string
+        bot_access_token:
+          type: string
+        bot_icon_url:
+          type: string
+          nullable: true
+        bot_id:
+          type: string
+        bot_name:
+          type: string
+          nullable: true
+        bot_user_id:
+          type: string
+        enterprise_id:
+          type: string
+          nullable: true
+        id:
+          type: string
+        sld:
+          type: string
+        team_id:
+          type: string
+        team_name:
+          type: string
+    Website:
+      type: object
+      properties:
+        call_to_action_exists:
+          type: boolean
+        call_to_action_link:
+          type: string
+        can_search_web:
+          type: boolean
+        color:
+          type: string
+        contact_link:
+          type: string
+        header_text:
+          type: string
+        id:
+          type: string
+        sld:
+          type: string
+        subdomains:
+          nullable: false
+          type: array
+          items:
+            type: string
+
+    Chart:
+      type: object
+      properties:
+        chart_type:
+          type: string
+          enum: [line, bar, area]
+        id:
+          type: string
+        name:
+          type: string
+        period:
+          type: string
+          enum: [hour, day, week, month, all_time]
+        website_id:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/ChartMetrics'
+    ChartMetrics:
+      type: array
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/ChartMetricQuery'
+        - $ref: '#/components/schemas/ChartMetricVisit'
+        - $ref: '#/components/schemas/ChartMetricOpen'
+        - $ref: '#/components/schemas/ChartMetricClose'
+        - $ref: '#/components/schemas/ChartMetricClickCTA'
+    ChartMetricQuery:
+      type: object
+      properties:
+        filters:
+          properties:
+            answer_text:
+              type: string
+            question_text:
+              type: string
+            source:
+              type: string
+              enum: [web, slack]
+            was_helpful:
+              type: boolean
+          type: object
+        type:
+          type: string
+          enum: [query]
+    ChartMetricVisit:
+      type: object
+      properties:
+        filters:
+          properties:
+            url:
+              type: string
+          type: object
+        type:
+          type: string
+          enum: [visit]
+    ChartMetricOpen:
+      type: object
+      properties:
+        filters:
+          properties:
+            url:
+              type: string
+          type: object
+        type:
+          type: string
+          enum: [open]
+    ChartMetricClose:
+      type: object
+      properties:
+        filters:
+          properties:
+            url:
+              type: string
+          type: object
+        type:
+          type: string
+          enum: [close]
+    ChartMetricClickCTA:
+      type: object
+      properties:
+        filters:
+          properties:
+            url:
+              type: string
+          type: object
+        type:
+          type: string
+          enum: [clickCTA]
+
+    RequestBodyQueriesHistoryGet:
+      type: "object"
+      properties:
+        not_answered:
+            type: boolean
+        pages:
+            type: integer
+        query:
+            type: string
+        to_csv:
+            type: boolean
+        was_helpful:
+            type: boolean
+        was_not_helpful:
+            type: boolean
+        website_id:
+            type: string
+    RequestBodyQueriesPost:
+      type: "object"
+      properties:
+        accountId:
+          type: string
+        query:
+          type: string
+        url:
+          type: string
+        source:
+          type: string
+        location:
+          type: string
+        visitorId:
+          type: string
+        ignoreCache:
+          type: boolean
+    RequestBodyWebsitesPost:
+      type: object
+      properties:
+        url:
+          type: string
+    RequestBodyQuestionsPost:
+      $ref: '#/components/schemas/Question'
+    RequestBodyQuestionsPatch:
+      $ref: '#/components/schemas/Question'
+    RequestBodyQuestionsSearchPost:
+      type: object
+      properties:
+        is_certified:
+          type: boolean
+        is_featured:
+          type: boolean
+        text:
+          type: string
+    RequestBodyWebsitesPatch:
+      $ref: '#/components/schemas/Website'
+    RequestBodySlackTeamsPatch:
+      $ref: '#/components/schemas/SlackTeam'
+    ResponseBodyQuestionsSearchPost:
+      type: array
+      items:
+        $ref: '#/components/schemas/Question'
+    ResponseBodyQuestionsGet:
+      $ref: '#/components/schemas/Question'
+    ResponseBodyQueriesPost:
+      $ref: '#/components/schemas/Question'
+    ResponseBodyQueriesHistoryPost:
+      type: array
+      items:
+        $ref: '#/components/schemas/Query'
+    ResponseBodyWebsitesPost:
+      $ref: '#/components/schemas/Website'
+    ResponseBodyAccountsSearchPost:
+      type: array
+      items:
+        $ref: '#/components/schemas/Account'
+    ResponseBodyAccountsLoginPost:
+      $ref: '#/components/schemas/Account'
+    ResponseBodyAccountsSwitchPost:
+      $ref: '#/components/schemas/Account'
+    ResponseBodySlackTeamsGet:
+      $ref: '#/components/schemas/SlackTeam'
+    ResponseBodySlackTeamsPost:
+      $ref: '#/components/schemas/SlackTeam'
+
