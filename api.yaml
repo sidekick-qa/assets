@@ -73,22 +73,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              properties:
-                accountId:
-                  type: string
-                query:
-                  type: string
-                url:
-                  type: string
-                source:
-                  type: string
-                location:
-                  type: string
-                visitorId:
-                  type: string
-                ignoreCache:
-                  type: boolean
+              $ref: '#/components/schemas/QuestionsQueryRequestBody'
       responses:
         "200":
           description: "success"
@@ -137,6 +122,23 @@ components:
       name: "accountId"
       in: "cookie"
   schemas:
+    QuestionsQueryRequestBody:
+      type: "object"
+      properties:
+        accountId:
+          type: string
+        query:
+          type: string
+        url:
+          type: string
+        source:
+          type: string
+        location:
+          type: string
+        visitorId:
+          type: string
+        ignoreCache:
+          type: boolean
     Question:
       type: "object"
       properties:
