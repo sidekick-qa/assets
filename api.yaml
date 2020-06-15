@@ -40,6 +40,10 @@ paths:
       responses:
         200:
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
         400:
           $ref: '#/components/responses/ValidationException'
         500:
@@ -66,8 +70,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Question'
-        "404":
-          description: "Question not found"
+        404:
+          $ref: '#/components/responses/NotFoundException'
         500:
           $ref: '#/components/responses/InternalErrorException'
     patch:
@@ -518,6 +522,7 @@ components:
                 nullable: false
               status:
                 type: integer
+                enum: [400]
                 nullable: false
               timestamp:
                 type: string
@@ -540,6 +545,30 @@ components:
                 nullable: false
               status:
                 type: integer
+                enum: [500]
+                nullable: false
+              timestamp:
+                type: string
+                nullable: false
+    NotFoundException:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                nullable: false
+              message:
+                type: string
+                nullable: false
+              path:
+                type: string
+                nullable: false
+              status:
+                type: integer
+                enum: [404]
                 nullable: false
               timestamp:
                 type: string
