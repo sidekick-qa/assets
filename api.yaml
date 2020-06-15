@@ -74,7 +74,7 @@ paths:
           $ref: '#/components/responses/NotFoundException'
         500:
           $ref: '#/components/responses/InternalErrorException'
-    patch:
+    put:
       tags:
       - "questions"
       summary: "Update an existing question"
@@ -201,7 +201,7 @@ paths:
         500:
           $ref: '#/components/responses/InternalErrorException'
   /websites/{websiteId}:
-    patch:
+    put:
       tags:
         - "websites"
       summary: "Update a website."
@@ -360,7 +360,7 @@ paths:
           $ref: '#/components/responses/ValidationException'
         500:
           $ref: '#/components/responses/InternalErrorException'
-    patch:
+    put:
       tags:
         - "slack"
       summary: "Update slack integration."
@@ -425,7 +425,7 @@ paths:
         500:
           $ref: '#/components/responses/InternalErrorException'
   /analytics/charts/{chartId}:
-    patch:
+    put:
       tags:
         - "analytics"
       summary: "Update a chart."
