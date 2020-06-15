@@ -38,10 +38,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Question'
       responses:
-        "200":
-          description: "success"
-        "400":
+        200:
+          description: Success
+        400:
           $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
       security:
       - accountId: []
   /questions/{questionId}:
@@ -66,6 +68,8 @@ paths:
                 $ref: '#/components/schemas/Question'
         "404":
           description: "Question not found"
+        500:
+          $ref: '#/components/responses/InternalErrorException'
     patch:
       tags:
       - "questions"
@@ -90,6 +94,8 @@ paths:
           description: "success"
         "404":
           description: "Question not found"
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /questions/search:
     post:
       tags:
@@ -101,13 +107,11 @@ paths:
         $ref: '#/components/requestBodies/QuestionsSearchPost'
       responses:
         "200":
-          description: "success"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseBodyQuestionsSearchPost'
-        "400":
-          description: "Invalid status value"
+          $ref: '#/components/responses/QuestionsSearchPost'
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /queries:
     post:
       tags:
@@ -116,12 +120,7 @@ paths:
       description: ""
       operationId: "queryQuestion"
       requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RequestBodyQueriesPost'
+        $ref: '#/components/requestBodies/QueriesPost'
       responses:
         "200":
           description: "success"
@@ -129,8 +128,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Question'
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /queries/history:
     post:
       tags:
@@ -139,21 +140,14 @@ paths:
       description: ""
       operationId: "getQueriesHistory"
       requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RequestBodyQueriesHistoryGet'
+        $ref: '#/components/requestBodies/QueriesHistoryGet'
       responses:
         "200":
-          description: "success"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseBodyQueriesHistoryPost'
-        "400":
-          description: "Invalid status value"
+          $ref: '#/components/responses/QueriesHistoryPost'
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /websites:
     post:
       tags:
@@ -162,12 +156,7 @@ paths:
       description: ""
       operationId: "addWebsite"
       requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RequestBodyWebsitesPost'
+        $ref: '#/components/requestBodies/WebsitesPost'
       responses:
         "200":
           description: "success"
@@ -175,8 +164,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Website'
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /websites/{websiteId}:
     patch:
       tags:
@@ -200,8 +191,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
     delete:
       tags:
         - "websites"
@@ -218,8 +211,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /accounts/search:
     post:
       tags:
@@ -229,13 +224,11 @@ paths:
       operationId: "getAccounts"
       responses:
         "200":
-          description: "success"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseBodyAccountsSearchPost'
-        "400":
-          description: "Invalid status value"
+          $ref: '#/components/responses/AccountsSearchPost'
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /accounts/login/{firebaseIdToken}:
     post:
       tags:
@@ -256,8 +249,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /accounts/switch/{accountId}:
     post:
       tags:
@@ -278,8 +273,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /slack/teams:
     post:
       tags:
@@ -297,8 +294,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /slack/teams/{slackTeamId}:
     get:
       tags:
@@ -319,8 +318,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SlackTeam'
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
     patch:
       tags:
         - "slack"
@@ -343,8 +344,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /analytics/charts:
     get:
       tags:
@@ -359,8 +362,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Chart'
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
     post:
       tags:
         - "analytics"
@@ -377,8 +382,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /analytics/charts/{chartId}:
     patch:
       tags:
@@ -402,8 +409,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
     delete:
       tags:
         - "analytics"
@@ -419,8 +428,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
   /analytics/charts/data:
     post:
       tags:
@@ -438,8 +449,10 @@ paths:
       responses:
         "200":
           description: "success"
-        "400":
-          description: "Invalid status value"
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
 
 components:
   securitySchemes:
@@ -464,6 +477,62 @@ components:
               text:
                 type: string
 
+    QueriesHistoryGet:
+      description: ""
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              notAnswered:
+                type: boolean
+              pages:
+                type: integer
+              query:
+                type: string
+              toCsv:
+                type: boolean
+              wasHelpful:
+                type: boolean
+              wasNotHelpful:
+                type: boolean
+              websiteId:
+                type: string
+
+    QueriesPost:
+      description: ""
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              accountId:
+                type: string
+              query:
+                type: string
+              url:
+                type: string
+              source:
+                type: string
+              location:
+                type: string
+              visitorId:
+                type: string
+              ignoreCache:
+                type: boolean
+    WebsitesPost:
+      description: ""
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+
   responses:
     ValidationException:
       description: Invalid request
@@ -485,11 +554,57 @@ components:
                 type: string
                 nullable: false
               status:
-                type: string
+                type: integer
                 nullable: false
               timestamp:
                 type: string
                 nullable: false
+    InternalErrorException:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                nullable: false
+              message:
+                type: string
+                nullable: false
+              path:
+                type: string
+                nullable: false
+              status:
+                type: integer
+                nullable: false
+              timestamp:
+                type: string
+                nullable: false
+    QuestionsSearchPost:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Question'
+    QueriesHistoryPost:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Query'
+    AccountsSearchPost:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Account'
 
   schemas:
     Account:
@@ -716,56 +831,6 @@ components:
           type: string
           enum: [clickCTA]
 
-    RequestBodyQueriesHistoryGet:
-      type: "object"
-      properties:
-        notAnswered:
-            type: boolean
-        pages:
-            type: integer
-        query:
-            type: string
-        toCsv:
-            type: boolean
-        wasHelpful:
-            type: boolean
-        wasNotHelpful:
-            type: boolean
-        websiteId:
-            type: string
-    RequestBodyQueriesPost:
-      type: "object"
-      properties:
-        accountId:
-          type: string
-        query:
-          type: string
-        url:
-          type: string
-        source:
-          type: string
-        location:
-          type: string
-        visitorId:
-          type: string
-        ignoreCache:
-          type: boolean
-    RequestBodyWebsitesPost:
-      type: object
-      properties:
-        url:
-          type: string
-    ResponseBodyQuestionsSearchPost:
-      type: array
-      items:
-        $ref: '#/components/schemas/Question'
-    ResponseBodyQueriesHistoryPost:
-      type: array
-      items:
-        $ref: '#/components/schemas/Query'
-    ResponseBodyAccountsSearchPost:
-      type: array
-      items:
-        $ref: '#/components/schemas/Account'
+
 
 
