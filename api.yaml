@@ -41,7 +41,7 @@ paths:
         "200":
           description: "success"
         "400":
-          description: "Invalid question"
+          $ref: '#/components/responses/ValidationException'
       security:
       - accountId: []
   /questions/{questionId}:
@@ -452,8 +452,35 @@ components:
       type: "apiKey"
       name: "accountId"
       in: "cookie"
-  schemas:
 
+  responses:
+    ValidationException:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                nullable: false
+              errors:
+                type: object
+                nullable: false
+              message:
+                type: string
+                nullable: false
+              path:
+                type: string
+                nullable: false
+              status:
+                type: string
+                nullable: false
+              timestamp:
+                type: string
+                nullable: false
+
+  schemas:
     Account:
       type: object
       properties:
@@ -738,4 +765,5 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Account'
+
 
