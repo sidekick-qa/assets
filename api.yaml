@@ -98,12 +98,7 @@ paths:
       description: ""
       operationId: "searchQuestions"
       requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RequestBodyQuestionsSearchPost'
+        $ref: '#/components/requestBodies/QuestionsSearchPost'
       responses:
         "200":
           description: "success"
@@ -452,6 +447,22 @@ components:
       type: "apiKey"
       name: "accountId"
       in: "cookie"
+
+  requestBodies:
+    QuestionsSearchPost:
+      description: ""
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              isCertified:
+                type: boolean
+              isFeatured:
+                type: boolean
+              text:
+                type: string
 
   responses:
     ValidationException:
