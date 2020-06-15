@@ -461,7 +461,7 @@ components:
           type: string
         id:
           type: string
-        is_admin:
+        isAdmin:
           type: boolean
         name:
           type: string
@@ -469,7 +469,7 @@ components:
         phone:
           type: string
           nullable: true
-        photo_url:
+        photoUrl:
           type: string
           nullable: true
         provider:
@@ -477,31 +477,31 @@ components:
     Question:
       type: "object"
       properties:
-        answer_text:
+        answerText:
           type: string
         id:
           type: string
-        is_certified:
+        isCertified:
           type: boolean
-        is_featured:
+        isFeatured:
           type: boolean
         link:
           type: string
           nullable: true
-        question_text:
+        questionText:
           type: string
           nullable: false
-        search_links:
+        searchLinks:
           type: array
           items:
             type: string
           nullable: true
-        search_snippets:
+        searchSnippets:
           type: array
           items:
             type: string
           nullable: true
-        search_titles:
+        searchTitles:
           type: array
           items:
             type: string
@@ -512,7 +512,7 @@ components:
     Query:
       type: object
       properties:
-        answer_text:
+        answerText:
           type: string
           nullable: true
         id:
@@ -520,62 +520,62 @@ components:
         link:
           type: string
           nullable: true
-        question_text:
+        questionText:
           type: string
         source:
           type: string
         timestamp:
           type: integer
-        visitor_id:
+        visitorId:
           type: string
           nullable: true
-        was_helpful:
+        wasHelpful:
           type: boolean
           nullable: true
     SlackTeam:
       type: object
       properties:
-        access_token:
+        accessToken:
           type: string
-        account_id:
+        accountId:
           type: string
-        bot_access_token:
+        botAccessToken:
           type: string
-        bot_icon_url:
-          type: string
-          nullable: true
-        bot_id:
-          type: string
-        bot_name:
+        botIconUrl:
           type: string
           nullable: true
-        bot_user_id:
+        botId:
           type: string
-        enterprise_id:
+        botName:
+          type: string
+          nullable: true
+        botUserId:
+          type: string
+        enterpriseId:
           type: string
           nullable: true
         id:
           type: string
         sld:
           type: string
-        team_id:
+        teamId:
           type: string
-        team_name:
+        teamName:
           type: string
     Website:
       type: object
       properties:
-        call_to_action_exists:
+        callToActionExists:
           type: boolean
-        call_to_action_link:
+        callToActionLink:
           type: string
-        can_search_web:
+        canSearchWeb:
           type: boolean
         color:
           type: string
-        contact_link:
+        contactLink:
           type: string
-        header_text:
+        headerText:
           type: string
         id:
           type: string
@@ -590,7 +590,7 @@ components:
     Chart:
       type: object
       properties:
-        chart_type:
+        chartType:
           type: string
           enum: [line, bar, area]
         id:
@@ -600,7 +600,7 @@ components:
         period:
           type: string
           enum: [hour, day, week, month, all_time]
-        website_id:
+        websiteId:
           type: string
         metrics:
           $ref: '#/components/schemas/ChartMetrics'
@@ -618,14 +618,14 @@ components:
       properties:
         filters:
           properties:
-            answer_text:
+            answerText:
               type: string
-            question_text:
+            questionText:
               type: string
             source:
               type: string
               enum: [web, slack]
-            was_helpful:
+            wasHelpful:
               type: boolean
           type: object
         type:
@@ -679,19 +679,19 @@ components:
     RequestBodyQueriesHistoryGet:
       type: "object"
       properties:
-        not_answered:
+        notAnswered:
             type: boolean
         pages:
             type: integer
         query:
             type: string
-        to_csv:
+        toCsv:
             type: boolean
-        was_helpful:
+        wasHelpful:
             type: boolean
-        was_not_helpful:
+        wasNotHelpful:
             type: boolean
-        website_id:
+        websiteId:
             type: string
     RequestBodyQueriesPost:
       type: "object"
@@ -718,9 +718,9 @@ components:
     RequestBodyQuestionsSearchPost:
       type: object
       properties:
-        is_certified:
+        isCertified:
           type: boolean
-        is_featured:
+        isFeatured:
           type: boolean
         text:
           type: string
