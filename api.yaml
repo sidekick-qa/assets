@@ -478,8 +478,7 @@ components:
       type: "object"
       properties:
         answer_text:
-            type: string
-            nullable: true
+          type: string
         id:
           type: string
         is_certified:
@@ -491,6 +490,7 @@ components:
           nullable: true
         question_text:
           type: string
+          nullable: false
         search_links:
           type: array
           items:
