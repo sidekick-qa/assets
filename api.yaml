@@ -476,6 +476,8 @@ components:
           type: string
     Question:
       type: "object"
+      required:
+        - questionText
       properties:
         answerText:
           type: string
