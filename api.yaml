@@ -104,10 +104,20 @@ paths:
       description: ""
       operationId: "searchQuestions"
       requestBody:
-        $ref: '#/components/requestBodies/QuestionsSearchPost'
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyQuestionsSearchPost'
       responses:
-        "200":
-          $ref: '#/components/responses/QuestionsSearchPost'
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
         400:
           $ref: '#/components/responses/ValidationException'
         500:
@@ -120,7 +130,11 @@ paths:
       description: ""
       operationId: "queryQuestion"
       requestBody:
-        $ref: '#/components/requestBodies/QueriesPost'
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyQueriesPost'
       responses:
         "200":
           description: "success"
@@ -140,10 +154,20 @@ paths:
       description: ""
       operationId: "getQueriesHistory"
       requestBody:
-        $ref: '#/components/requestBodies/QueriesHistoryGet'
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyQueriesHistoryGet'
       responses:
-        "200":
-          $ref: '#/components/responses/QueriesHistoryPost'
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Query'
         400:
           $ref: '#/components/responses/ValidationException'
         500:
@@ -156,7 +180,11 @@ paths:
       description: ""
       operationId: "addWebsite"
       requestBody:
-        $ref: '#/components/requestBodies/WebsitesPost'
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyWebsitesPost'
       responses:
         "200":
           description: "success"
@@ -223,8 +251,14 @@ paths:
       description: ""
       operationId: "getAccounts"
       responses:
-        "200":
-          $ref: '#/components/responses/AccountsSearchPost'
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
         400:
           $ref: '#/components/responses/ValidationException'
         500:
@@ -461,77 +495,6 @@ components:
       name: "accountId"
       in: "cookie"
 
-  requestBodies:
-    QuestionsSearchPost:
-      description: ""
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              isCertified:
-                type: boolean
-              isFeatured:
-                type: boolean
-              text:
-                type: string
-
-    QueriesHistoryGet:
-      description: ""
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              notAnswered:
-                type: boolean
-              pages:
-                type: integer
-              query:
-                type: string
-              toCsv:
-                type: boolean
-              wasHelpful:
-                type: boolean
-              wasNotHelpful:
-                type: boolean
-              websiteId:
-                type: string
-
-    QueriesPost:
-      description: ""
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              accountId:
-                type: string
-              query:
-                type: string
-              url:
-                type: string
-              source:
-                type: string
-              location:
-                type: string
-              visitorId:
-                type: string
-              ignoreCache:
-                type: boolean
-    WebsitesPost:
-      description: ""
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              url:
-                type: string
 
   responses:
     ValidationException:
@@ -581,30 +544,6 @@ components:
               timestamp:
                 type: string
                 nullable: false
-    QuestionsSearchPost:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Question'
-    QueriesHistoryPost:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Query'
-    AccountsSearchPost:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Account'
 
   schemas:
     Account:
@@ -831,6 +770,55 @@ components:
           type: string
           enum: [clickCTA]
 
+    RequestBodyQuestionsSearchPost:
+      type: object
+      properties:
+        isCertified:
+          type: boolean
+        isFeatured:
+          type: boolean
+        text:
+          type: string
 
+    RequestBodyQueriesHistoryGet:
+      type: object
+      properties:
+        notAnswered:
+          type: boolean
+        pages:
+          type: integer
+        query:
+          type: string
+        toCsv:
+          type: boolean
+        wasHelpful:
+          type: boolean
+        wasNotHelpful:
+          type: boolean
+        websiteId:
+          type: string
+
+    RequestBodyQueriesPost:
+      type: object
+      properties:
+        accountId:
+          type: string
+        query:
+          type: string
+        url:
+          type: string
+        source:
+          type: string
+        location:
+          type: string
+        visitorId:
+          type: string
+        ignoreCache:
+          type: boolean
+    RequestBodyWebsitesPost:
+      type: object
+      properties:
+        url:
+          type: string
 
 
