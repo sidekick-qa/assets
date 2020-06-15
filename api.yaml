@@ -755,15 +755,6 @@ components:
       properties:
         url:
           type: string
-    RequestBodyQuestionsSearchPost:
-      type: object
-      properties:
-        isCertified:
-          type: boolean
-        isFeatured:
-          type: boolean
-        text:
-          type: string
     ResponseBodyQuestionsSearchPost:
       type: array
       items:
