@@ -607,10 +607,10 @@ components:
         provider:
           type: string
           nullable: false
-    Question:
-      type: "object"
+
+    BaseQuestion:
+      type: object
       required:
-        - id
         - isCertified
         - isFeatured
         - link
@@ -619,13 +619,7 @@ components:
         - searchSnippets
         - searchTitles
         - title
-        - queryCount
-        - helpfulCount
-        - notHelpfulCount
       properties:
-        id:
-          type: string
-          nullable: false
         questionText:
           type: string
           nullable: false
@@ -659,15 +653,29 @@ components:
         title:
           type: string
           nullable: true
-        queryCount:
-          type: string
-          nullable: false
-        helpfulCount:
-          type: string
-          nullable: false
-        notHelpfulCount:
-          type: string
-          nullable: false
+
+    Question:
+      allOf:
+        - $ref: '#/components/schemas/BaseQuestion'
+        - type: object
+          required:
+            - id
+            - queryCount
+            - helpfulCount
+            - notHelpfulCount
+          properties:
+            id:
+              type: string
+              nullable: false
+            queryCount:
+              type: string
+              nullable: false
+            helpfulCount:
+              type: string
+              nullable: false
+            notHelpfulCount:
+              type: string
+              nullable: false
     Query:
       type: object
       required:
