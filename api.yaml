@@ -678,10 +678,14 @@ components:
     QuestionPage:
       type: object
       required:
+        - pageNum
         - pageSize
         - totalSize
         - questions
       properties:
+        pageNum:
+          type: integer
+          nullable: false
         pageSize:
           type: integer
           nullable: false
@@ -921,10 +925,19 @@ components:
       properties:
         isCertified:
           type: boolean
+          nullable: false
         isFeatured:
           type: boolean
+          nullable: false
         text:
           type: string
+          nullable: false
+        pageSize:
+          type: integer
+          nullable: false
+        pageNum:
+          type: integer
+          nullable: false
 
     RequestBodyQueriesHistoryGet:
       type: object
