@@ -922,6 +922,12 @@ components:
 
     RequestBodyQuestionsSearchPost:
       type: object
+      required:
+        - isCertified
+        - isFeatured
+        - text
+        - pageSize
+        - pageNum
       properties:
         isCertified:
           type: boolean
