@@ -577,13 +577,24 @@ components:
   schemas:
     Account:
       type: object
+      required:
+        - id
+        - email
+        - isAdmin
+        - name
+        - phone
+        - photoUrl
+        - provider
       properties:
-        email:
-          type: string
         id:
           type: string
+          nullable: false
+        email:
+          type: string
+          nullable: false
         isAdmin:
           type: boolean
+          nullable: false
         name:
           type: string
           nullable: true
@@ -595,25 +606,41 @@ components:
           nullable: true
         provider:
           type: string
+          nullable: false
     Question:
       type: "object"
       required:
+        - id
+        - isCertified
+        - isFeatured
+        - link
         - questionText
+        - searchLinks
+        - searchSnippets
+        - searchTitles
+        - title
+        - queryCount
+        - helpfulCount
+        - notHelpfulCount
       properties:
-        answerText:
-          type: string
         id:
           type: string
-        isCertified:
-          type: boolean
-        isFeatured:
-          type: boolean
-        link:
-          type: string
-          nullable: true
+          nullable: false
         questionText:
           type: string
           nullable: false
+        answerText:
+          type: string
+          nullable: true
+        isCertified:
+          type: boolean
+          nullable: false
+        isFeatured:
+          type: boolean
+          nullable: false
+        link:
+          type: string
+          nullable: true
         searchLinks:
           type: array
           items:
@@ -632,23 +659,45 @@ components:
         title:
           type: string
           nullable: true
+        queryCount:
+          type: string
+          nullable: false
+        helpfulCount:
+          type: string
+          nullable: false
+        notHelpfulCount:
+          type: string
+          nullable: false
     Query:
       type: object
+      required:
+        - id
+        - questionText
+        - answerText
+        - link
+        - source
+        - timestamp
+        - visitorId
+        - wasHelpful
       properties:
+        id:
+          type: string
+          nullable: false
+        questionText:
+          type: string
+          nullable: false
         answerText:
           type: string
           nullable: true
-        id:
-          type: string
         link:
           type: string
           nullable: true
-        questionText:
-          type: string
         source:
           type: string
+          nullable: false
         timestamp:
           type: integer
+          nullable: false
         visitorId:
           type: string
           nullable: true
@@ -657,53 +706,93 @@ components:
           nullable: true
     SlackTeam:
       type: object
+      required:
+        - accessToken
+        - accountId
+        - botAccessToken
+        - botIconUrl
+        - botId
+        - botName
+        - botUserId
+        - enterpriseId
+        - id
+        - sld
+        - teamId
+        - teamName
       properties:
         accessToken:
           type: string
+          nullable: false
         accountId:
           type: string
+          nullable: false
         botAccessToken:
           type: string
+          nullable: false
         botIconUrl:
           type: string
           nullable: true
         botId:
           type: string
+          nullable: false
         botName:
           type: string
           nullable: true
         botUserId:
           type: string
+          nullable: false
         enterpriseId:
           type: string
           nullable: true
         id:
           type: string
+          nullable: false
         sld:
           type: string
+          nullable: false
         teamId:
           type: string
+          nullable: false
         teamName:
           type: string
+          nullable: false
     Website:
       type: object
+      required:
+        - callToActionExists
+        - callToActionLink
+        - canSearchWeb
+        - color
+        - contactLink
+        - headerText
+        - id
+        - sld
+        - subdomains
       properties:
         callToActionExists:
           type: boolean
+          nullable: false
         callToActionLink:
           type: string
+          nullable: false
         canSearchWeb:
           type: boolean
+          nullable: false
         color:
           type: string
+          nullable: false
         contactLink:
           type: string
+          nullable: false
         headerText:
           type: string
+          nullable: false
         id:
           type: string
+          nullable: false
         sld:
           type: string
+          nullable: false
         subdomains:
           nullable: false
           type: array
@@ -738,7 +827,11 @@ components:
         - $ref: '#/components/schemas/ChartMetricClickCTA'
     ChartMetricQuery:
       type: object
+      description: Query
       properties:
+        type:
+          type: string
+          enum: [query]
         filters:
           properties:
             answerText:
@@ -751,9 +844,7 @@ components:
             wasHelpful:
               type: boolean
           type: object
-        type:
-          type: string
-          enum: [query]
+
     ChartMetricVisit:
       type: object
       properties:
