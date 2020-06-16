@@ -688,6 +688,7 @@ components:
         totalSize:
           type: integer
           nullable: false
+          format: int64
         questions:
           type: array
           items:
