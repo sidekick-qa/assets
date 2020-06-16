@@ -609,8 +609,8 @@ components:
     BaseQuestion:
       type: object
       required:
-        - isCertified
-        - isFeatured
+        - certified
+        - featured
         - link
         - questionText
         - searchLinks
@@ -624,10 +624,10 @@ components:
         answerText:
           type: string
           nullable: true
-        isCertified:
+        certified:
           type: boolean
           nullable: false
-        isFeatured:
+        featured:
           type: boolean
           nullable: false
         link:
@@ -923,16 +923,16 @@ components:
     RequestBodyQuestionsSearchPost:
       type: object
       required:
-        - isCertified
-        - isFeatured
+        - certified
+        - featured
         - text
         - pageSize
         - pageNum
       properties:
-        isCertified:
+        certified:
           type: boolean
           nullable: false
-        isFeatured:
+        featured:
           type: boolean
           nullable: false
         text:
