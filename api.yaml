@@ -119,9 +119,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Question'
+                $ref: '#/components/schemas/QuestionPage'
         400:
           $ref: '#/components/responses/ValidationException'
         500:
@@ -676,6 +674,25 @@ components:
             notHelpfulCount:
               type: integer
               nullable: false
+
+    QuestionPage:
+      type: object
+      required:
+        - pageSize
+        - totalSize
+        - questions
+      properties:
+        pageSize:
+          type: integer
+          nullable: false
+        totalSize:
+          type: integer
+          nullable: false
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+
     Query:
       type: object
       required:
