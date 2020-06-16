@@ -668,13 +668,13 @@ components:
               type: string
               nullable: false
             queryCount:
-              type: string
+              type: integer
               nullable: false
             helpfulCount:
-              type: string
+              type: integer
               nullable: false
             notHelpfulCount:
-              type: string
+              type: integer
               nullable: false
     Query:
       type: object
