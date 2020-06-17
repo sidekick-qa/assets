@@ -847,6 +847,8 @@ components:
           $ref: '#/components/schemas/ChartMetrics'
     ChartMetrics:
       type: array
+      items:
+        type: object
 #      items:
 #        oneOf:
 #        - $ref: '#/components/schemas/ChartMetricQuery'
