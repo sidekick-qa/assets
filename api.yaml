@@ -847,13 +847,13 @@ components:
           $ref: '#/components/schemas/ChartMetrics'
     ChartMetrics:
       type: array
-      items:
-        oneOf:
-        - $ref: '#/components/schemas/ChartMetricQuery'
-        - $ref: '#/components/schemas/ChartMetricVisit'
-        - $ref: '#/components/schemas/ChartMetricOpen'
-        - $ref: '#/components/schemas/ChartMetricClose'
-        - $ref: '#/components/schemas/ChartMetricClickCTA'
+#      items:
+#        oneOf:
+#        - $ref: '#/components/schemas/ChartMetricQuery'
+#        - $ref: '#/components/schemas/ChartMetricVisit'
+#        - $ref: '#/components/schemas/ChartMetricOpen'
+#        - $ref: '#/components/schemas/ChartMetricClose'
+#        - $ref: '#/components/schemas/ChartMetricClickCTA'
     ChartMetricQuery:
       type: object
       description: Query
