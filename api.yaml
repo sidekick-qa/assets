@@ -92,7 +92,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BaseQuestion'
+              $ref: '#/components/schemas/PublicQuestion'
       responses:
         "200":
           description: "success"
@@ -606,7 +606,7 @@ components:
           type: string
           nullable: false
 
-    BaseQuestion:
+    PublicQuestion:
       type: object
       required:
         - certified
@@ -653,7 +653,7 @@ components:
 
     Question:
       allOf:
-        - $ref: '#/components/schemas/BaseQuestion'
+        - $ref: '#/components/schemas/PublicQuestion'
         - type: object
           required:
             - id
