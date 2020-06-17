@@ -74,7 +74,7 @@ paths:
           $ref: '#/components/responses/NotFoundException'
         500:
           $ref: '#/components/responses/InternalErrorException'
-    put:
+    patch:
       tags:
       - "questions"
       summary: "Update an existing question"
@@ -92,7 +92,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/PartialPublicQuestion'
       responses:
         "200":
           description: "success"
@@ -606,16 +606,8 @@ components:
           type: string
           nullable: false
 
-    BaseQuestion:
+    PartialPublicQuestion:
       type: object
-      required:
-        - certified
-        - featured
-        - link
-        - questionText
-        - searchLinks
-        - searchSnippets
-        - searchTitles
       properties:
         questionText:
           type: string
@@ -651,9 +643,22 @@ components:
           type: string
           nullable: true
 
+    PublicQuestion:
+      allOf:
+        - $ref: '#/components/schemas/PartialPublicQuestion'
+        - type: object
+          required:
+            - certified
+            - featured
+            - link
+            - questionText
+            - searchLinks
+            - searchSnippets
+            - searchTitles
+
     Question:
       allOf:
-        - $ref: '#/components/schemas/BaseQuestion'
+        - $ref: '#/components/schemas/PublicQuestion'
         - type: object
           required:
             - id
