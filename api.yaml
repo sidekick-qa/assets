@@ -616,7 +616,6 @@ components:
         - searchLinks
         - searchSnippets
         - searchTitles
-        - title
       properties:
         questionText:
           type: string
