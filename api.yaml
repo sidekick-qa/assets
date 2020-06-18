@@ -609,6 +609,8 @@ components:
     PublicQuestion:
       type: object
       required:
+        - certified
+        - featured
         - link
         - questionText
         - searchLinks
@@ -922,8 +924,6 @@ components:
     RequestBodyQuestionsSearchPost:
       type: object
       required:
-        - certified
-        - featured
         - text
         - pageSize
         - pageNum
