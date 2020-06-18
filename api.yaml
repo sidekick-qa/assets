@@ -1065,6 +1065,6 @@ components:
           type: string
           nullable: false
         wasHelpful:
-          type: string
+          type: boolean
           nullable: true
 
