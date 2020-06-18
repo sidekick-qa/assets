@@ -124,10 +124,10 @@ paths:
           $ref: '#/components/responses/ValidationException'
         500:
           $ref: '#/components/responses/InternalErrorException'
-  /queries:
+  /questions/answer:
     post:
       tags:
-      - "queries"
+      - "questions"
       summary: "Get an answer for a given query."
       description: ""
       operationId: "queryQuestion"
@@ -136,7 +136,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyQueriesPost'
+              $ref: '#/components/schemas/RequestBodyQuestionsAnswer'
       responses:
         "200":
           description: "success"
@@ -144,6 +144,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Question'
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
+  /queries:
+    post:
+      tags:
+        - "queries"
+      summary: "Post a query ."
+      description: ""
+      operationId: "saveQuery"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicQuery'
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+        400:
+          $ref: '#/components/responses/ValidationException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
+  /queries/helpful:
+    post:
+      tags:
+        - "queries"
+      summary: "Record helpful for a visitor."
+      description: ""
+      operationId: "recordHelpful"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyQueriesHelpful'
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
         400:
           $ref: '#/components/responses/ValidationException'
         500:
@@ -609,14 +657,19 @@ components:
     PublicQuestion:
       type: object
       required:
+        - websiteId
+        - questionText
+        - answerText
         - certified
         - featured
         - link
-        - questionText
         - searchLinks
         - searchSnippets
         - searchTitles
       properties:
+        websiteId:
+          type: string
+          nullable: false
         questionText:
           type: string
           nullable: false
@@ -697,10 +750,11 @@ components:
           items:
             $ref: '#/components/schemas/Question'
 
-    Query:
+    PublicQuery:
       type: object
       required:
-        - id
+        - websiteId
+        - questionId
         - questionText
         - answerText
         - link
@@ -709,7 +763,10 @@ components:
         - visitorId
         - wasHelpful
       properties:
-        id:
+        websiteId:
+          type: string
+          nullable: false
+        questionId:
           type: string
           nullable: false
         questionText:
@@ -728,16 +785,39 @@ components:
           type: integer
           nullable: false
         visitorId:
+          description: Visitor Id of user that asked
           type: string
           nullable: true
-        wasHelpful:
-          type: boolean
-          nullable: true
+
+    Query:
+      allOf:
+        - $ref: '#/components/schemas/PublicQuery'
+        - type: object
+          required:
+            - id
+            - visitorsWhoFoundHelpful
+            - visitorsWhoFoundNotHelpful
+          properties:
+            id:
+              type: string
+              nullable: false
+            visitorIdsHelpful:
+              description: Visitor Ids of users who found query helpful
+              type: array
+              nullable: false
+              items:
+                type: string
+            visitorIdsNotHelpful:
+              description: Visitor Ids of users who found query not helpful
+              type: array
+              nullable: false
+              items:
+                type: string
     SlackTeam:
       type: object
       required:
         - accessToken
-        - accountId
+        - websiteId
         - botAccessToken
         - botIconUrl
         - botId
@@ -752,7 +832,7 @@ components:
         accessToken:
           type: string
           nullable: false
-        accountId:
+        websiteId:
           type: string
           nullable: false
         botAccessToken:
@@ -962,7 +1042,7 @@ components:
         websiteId:
           type: string
 
-    RequestBodyQueriesPost:
+    RequestBodyQuestionsAnswer:
       type: object
       properties:
         accountId:
@@ -981,8 +1061,31 @@ components:
           type: boolean
     RequestBodyWebsitesPost:
       type: object
+      required:
+        - accountId
+        - url
       properties:
+        accountId:
+          type: string
+          nullable: false
         url:
           type: string
+          nullable: false
 
+    RequestBodyQueriesHelpful:
+      type: object
+      required:
+        - queryId
+        - visitorId
+        - wasHelpful
+      properties:
+        queryId:
+          type: string
+          nullable: false
+        visitorId:
+          type: string
+          nullable: false
+        wasHelpful:
+          type: string
+          nullable: true
 
