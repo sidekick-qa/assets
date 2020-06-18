@@ -764,9 +764,7 @@ components:
           type: string
           nullable: false
         source:
-          type: string
-          enum: [web, slack]
-          nullable: false
+          $ref: '#/components/schemas/PublicQuery'
         location:
           type: string
           nullable: false
@@ -774,6 +772,11 @@ components:
           description: Visitor Id of user that asked
           type: string
           nullable: true
+
+    QuerySource:
+      type: string
+      enum: [web, slack]
+      nullable: false
 
     Query:
       allOf:
@@ -944,8 +947,7 @@ components:
             questionText:
               type: string
             source:
-              type: string
-              enum: [web, slack]
+              $ref: '#/components/schemas/PublicQuery'
             wasHelpful:
               type: boolean
           type: object
