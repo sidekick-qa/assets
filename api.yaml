@@ -36,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/PublicQuestion'
       responses:
         200:
           description: Success
@@ -48,8 +48,6 @@ paths:
           $ref: '#/components/responses/ValidationException'
         500:
           $ref: '#/components/responses/InternalErrorException'
-      security:
-      - accountId: []
   /questions/{questionId}:
     get:
       tags:
@@ -124,37 +122,37 @@ paths:
           $ref: '#/components/responses/ValidationException'
         500:
           $ref: '#/components/responses/InternalErrorException'
-  /questions/answer:
-    post:
+  /queries/{queryId}:
+    get:
       tags:
-      - "questions"
-      summary: "Get an answer for a given query."
+        - "queries"
+      summary: "Get a query by id."
       description: ""
-      operationId: "queryQuestion"
-      requestBody:
-        description: ""
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RequestBodyQuestionsAnswer'
+      operationId: "getQuery"
+      parameters:
+        - in: path
+          name: queryId
+          schema:
+            type: string
+          required: true
       responses:
         "200":
           description: "success"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Question'
-        400:
-          $ref: '#/components/responses/ValidationException'
+                $ref: '#/components/schemas/Query'
+        404:
+          $ref: '#/components/responses/NotFoundException'
         500:
           $ref: '#/components/responses/InternalErrorException'
   /queries:
     post:
       tags:
         - "queries"
-      summary: "Post a query ."
+      summary: "Get an answer for a given query."
       description: ""
-      operationId: "saveQuery"
+      operationId: "answerQuery"
       requestBody:
         description: ""
         content:
@@ -754,39 +752,22 @@ components:
       type: object
       required:
         - websiteId
-        - questionId
-        - questionText
-        - answerText
-        - link
+        - queryText
         - source
         - location
-        - timestamp
         - visitorId
-        - wasHelpful
       properties:
         websiteId:
           type: string
           nullable: false
-        questionId:
+        queryText:
           type: string
           nullable: false
-        questionText:
-          type: string
-          nullable: false
-        answerText:
-          type: string
-          nullable: true
-        link:
-          type: string
-          nullable: true
         source:
           type: string
           nullable: false
         location:
           type: string
-          nullable: false
-        timestamp:
-          type: integer
           nullable: false
         visitorId:
           description: Visitor Id of user that asked
@@ -795,15 +776,18 @@ components:
 
     Query:
       allOf:
-        - $ref: '#/components/schemas/PublicQuery'
         - type: object
           required:
             - id
+            - timestamp
             - visitorsWhoFoundHelpful
             - visitorsWhoFoundNotHelpful
           properties:
             id:
               type: string
+              nullable: false
+            timestamp:
+              type: integer
               nullable: false
             visitorIdsHelpful:
               description: Visitor Ids of users who found query helpful
@@ -817,6 +801,8 @@ components:
               nullable: false
               items:
                 type: string
+        - $ref: '#/components/schemas/PublicQuery'
+        - $ref: '#/components/schemas/PublicQuestion'
     SlackTeam:
       type: object
       required:
