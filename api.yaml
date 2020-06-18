@@ -609,8 +609,6 @@ components:
     PublicQuestion:
       type: object
       required:
-        - certified
-        - featured
         - link
         - questionText
         - searchLinks
