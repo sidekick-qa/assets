@@ -765,6 +765,7 @@ components:
           nullable: false
         source:
           type: string
+          enum: [web, slack]
           nullable: false
         location:
           type: string
