@@ -759,6 +759,7 @@ components:
         - answerText
         - link
         - source
+        - location
         - timestamp
         - visitorId
         - wasHelpful
@@ -779,6 +780,9 @@ components:
           type: string
           nullable: true
         source:
+          type: string
+          nullable: false
+        location:
           type: string
           nullable: false
         timestamp:
@@ -1044,12 +1048,16 @@ components:
 
     RequestBodyQuestionsAnswer:
       type: object
+      required:
+        - websiteId
+        - query
+        - source
+        - location
+        - visitorId
       properties:
-        accountId:
+        websiteId:
           type: string
         query:
-          type: string
-        url:
           type: string
         source:
           type: string
@@ -1057,8 +1065,6 @@ components:
           type: string
         visitorId:
           type: string
-        ignoreCache:
-          type: boolean
     RequestBodyWebsitesPost:
       type: object
       required:
