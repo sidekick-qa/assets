@@ -764,7 +764,7 @@ components:
           type: string
           nullable: false
         source:
-          $ref: '#/components/schemas/PublicQuery'
+          $ref: '#/components/schemas/QuerySource'
         location:
           type: string
           nullable: false
@@ -947,7 +947,7 @@ components:
             questionText:
               type: string
             source:
-              $ref: '#/components/schemas/PublicQuery'
+              $ref: '#/components/schemas/QuerySource'
             wasHelpful:
               type: boolean
           type: object
