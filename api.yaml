@@ -776,6 +776,7 @@ components:
 
     Query:
       allOf:
+        - $ref: '#/components/schemas/PublicQuery'
         - type: object
           required:
             - id
@@ -801,8 +802,9 @@ components:
               nullable: false
               items:
                 type: string
-        - $ref: '#/components/schemas/PublicQuery'
-        - $ref: '#/components/schemas/PublicQuestion'
+            question:
+              $ref: '#/components/schemas/Question'
+
     SlackTeam:
       type: object
       required:
