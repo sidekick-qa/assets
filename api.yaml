@@ -110,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyQuestionsSearchPost'
+              $ref: '#/components/schemas/RequestBodyQuestionsSearch'
       responses:
         200:
           description: Success
@@ -206,7 +206,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyQueriesHistoryGet'
+              $ref: '#/components/schemas/RequestBodyQueriesHistory'
       responses:
         200:
           description: Success
@@ -991,7 +991,7 @@ components:
           type: string
           enum: [clickCTA]
 
-    RequestBodyQuestionsSearchPost:
+    RequestBodyQuestionsSearch:
       type: object
       required:
         - text
@@ -1014,7 +1014,7 @@ components:
           type: integer
           nullable: false
 
-    RequestBodyQueriesHistoryGet:
+    RequestBodyQueriesHistory:
       type: object
       properties:
         notAnswered:
@@ -1032,25 +1032,6 @@ components:
         websiteId:
           type: string
 
-    RequestBodyQuestionsAnswer:
-      type: object
-      required:
-        - websiteId
-        - query
-        - source
-        - location
-        - visitorId
-      properties:
-        websiteId:
-          type: string
-        query:
-          type: string
-        source:
-          type: string
-        location:
-          type: string
-        visitorId:
-          type: string
     RequestBodyWebsitesPost:
       type: object
       required:
