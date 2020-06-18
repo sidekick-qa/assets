@@ -780,8 +780,8 @@ components:
           required:
             - id
             - timestamp
-            - visitorsWhoFoundHelpful
-            - visitorsWhoFoundNotHelpful
+            - visitorIdsHelpful
+            - visitorIdsNotHelpful
           properties:
             id:
               type: string
