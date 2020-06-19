@@ -220,6 +220,7 @@ paths:
           $ref: '#/components/responses/ValidationException'
         500:
           $ref: '#/components/responses/InternalErrorException'
+
   /websites:
     post:
       tags:
@@ -232,7 +233,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestBodyWebsitesPost'
+              $ref: '#/components/schemas/PublicWebsite'
       responses:
         "200":
           description: "success"
@@ -245,6 +246,29 @@ paths:
         500:
           $ref: '#/components/responses/InternalErrorException'
   /websites/{websiteId}:
+    get:
+      tags:
+        - "websites"
+      summary: "Get a website by id."
+      description: ""
+      operationId: "getWebsite"
+      parameters:
+        - in: path
+          name: websiteId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+        404:
+          $ref: '#/components/responses/NotFoundException'
+        500:
+          $ref: '#/components/responses/InternalErrorException'
     put:
       tags:
         - "websites"
@@ -862,7 +886,8 @@ components:
         teamName:
           type: string
           nullable: false
-    Website:
+
+    PublicWebsite:
       type: object
       required:
         - callToActionExists
@@ -871,7 +896,6 @@ components:
         - color
         - contactLink
         - headerText
-        - id
         - sld
         - subdomains
       properties:
@@ -893,9 +917,6 @@ components:
         headerText:
           type: string
           nullable: false
-        id:
-          type: string
-          nullable: false
         sld:
           type: string
           nullable: false
@@ -904,6 +925,17 @@ components:
           type: array
           items:
             type: string
+
+    Website:
+      allOf:
+        - $ref: '#/components/schemas/PublicQuery'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              nullable: false
 
     Chart:
       type: object
@@ -1040,19 +1072,6 @@ components:
           type: boolean
         websiteId:
           type: string
-
-    RequestBodyWebsitesPost:
-      type: object
-      required:
-        - accountId
-        - url
-      properties:
-        accountId:
-          type: string
-          nullable: false
-        url:
-          type: string
-          nullable: false
 
     RequestBodyQueriesHelpful:
       type: object
