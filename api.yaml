@@ -1022,6 +1022,8 @@ components:
 
     RequestBodyQueriesHistory:
       type: object
+      required:
+        - pages
       properties:
         notAnswered:
           type: boolean
