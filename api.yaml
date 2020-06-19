@@ -846,7 +846,7 @@ components:
         - botUserId
         - enterpriseId
         - id
-        - sld
+        - subdomain
         - teamId
         - teamName
       properties:
@@ -877,7 +877,7 @@ components:
         id:
           type: string
           nullable: false
-        sld:
+        subdomain:
           type: string
           nullable: false
         teamId:
@@ -896,8 +896,8 @@ components:
         - color
         - contactLink
         - headerText
-        - sld
-        - subdomains
+        - subdomain
+        - otherSubdomains
       properties:
         callToActionExists:
           type: boolean
@@ -917,10 +917,10 @@ components:
         headerText:
           type: string
           nullable: false
-        sld:
+        subdomain:
           type: string
           nullable: false
-        subdomains:
+        otherSubdomains:
           nullable: false
           type: array
           items:
