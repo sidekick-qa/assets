@@ -1023,6 +1023,7 @@ components:
     RequestBodyQueriesHistory:
       type: object
       required:
+        - websiteId
         - pages
       properties:
         notAnswered:
