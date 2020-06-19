@@ -928,7 +928,7 @@ components:
 
     Website:
       allOf:
-        - $ref: '#/components/schemas/PublicQuery'
+        - $ref: '#/components/schemas/PublicWebsite'
         - type: object
           required:
             - id
