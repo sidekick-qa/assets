@@ -22,6 +22,8 @@ tags:
   description: "Resources for managing a slack integration."
 - name: "analytics"
   description: "Metrics."
+- name: "organizations"
+  description: "A group of users who share websites."
 paths:
   /questions:
     post:
@@ -315,13 +317,146 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
+  /organizations:
+    post:
+      tags:
+        - organizations
+      summary: Add an organization
+      operationId: addOrganization
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicOrganization'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+  /organizations/{organizationId}:
+    put:
+      tags:
+        - organizations
+      summary: Update an organization
+      operationId: updateOrganization
+      parameters:
+        - in: path
+          name: organizationId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicOrganization'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+  /organizations/accounts/{accountId}:
+    delete:
+      tags:
+        - organizations
+      summary: Delete a member account.
+      operationId: deleteOrganizationAccount
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+
+  /organizations/accounts/owners/{accountId}:
+    post:
+      tags:
+        - organizations
+      summary: Add an owner account.
+      operationId: addOrganizationOwner
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+
+  /organizations/accounts/members/{accountId}:
+    post:
+      tags:
+        - organizations
+      summary: Add a member account.
+      operationId: addOrganizationMember
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+
   /accounts/search:
     post:
       tags:
         - "accounts"
-      summary: "Get all accounts the user has access to."
+      summary: Search through all accounts
       description: ""
-      operationId: "getAccounts"
+      operationId: "searchAccounts"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyAccountsSearch'
       responses:
         200:
           description: Success
@@ -923,6 +1058,46 @@ components:
           items:
             type: string
 
+    PublicOrganization:
+      type: object
+      required:
+        - name
+        - creatorAccountId
+      properties:
+        name:
+          type: string
+          nullable: false
+        creatorAccountId:
+          type: string
+          nullable: false
+
+    Organization:
+      type: object
+      required:
+        - id
+        - ownerAccountIds
+        - memberAccountIds
+        - websiteIds
+      properties:
+        id:
+          type: string
+          nullable: false
+        ownerAccountIds:
+          nullable: false
+          type: array
+          items:
+            type: string
+        memberAccountIds:
+          nullable: false
+          type: array
+          items:
+            type: string
+        websiteIds:
+          nullable: false
+          type: array
+          items:
+            type: string
+
     Website:
       allOf:
         - $ref: '#/components/schemas/PublicWebsite'
@@ -1047,6 +1222,15 @@ components:
           nullable: false
         pageNum:
           type: integer
+          nullable: false
+
+    RequestBodyAccountsSearch:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
           nullable: false
 
     RequestBodyQueriesHistory:
