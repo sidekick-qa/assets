@@ -45,9 +45,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Question'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /questions/{questionId}:
     get:
       tags:
@@ -62,16 +62,16 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Question'
         404:
-          $ref: '#/components/responses/NotFoundException'
+          $ref: '#/components/responses/StatusMessage404'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
     put:
       tags:
       - "questions"
@@ -92,12 +92,12 @@ paths:
             schema:
               $ref: '#/components/schemas/PublicQuestion'
       responses:
-        "200":
+        200:
           description: "success"
-        "404":
-          description: "Question not found"
+        404:
+          $ref: '#/components/responses/StatusMessage404'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /questions/search:
     post:
       tags:
@@ -119,9 +119,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/QuestionPage'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /queries/{queryId}:
     get:
       tags:
@@ -136,16 +136,16 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Query'
         404:
-          $ref: '#/components/responses/NotFoundException'
+          $ref: '#/components/responses/StatusMessage404'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /queries:
     post:
       tags:
@@ -160,16 +160,16 @@ paths:
             schema:
               $ref: '#/components/schemas/PublicQuery'
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Query'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /queries/helpful:
     post:
       tags:
@@ -184,16 +184,16 @@ paths:
             schema:
               $ref: '#/components/schemas/RequestBodyQueriesHelpful'
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Query'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /queries/history:
     post:
       tags:
@@ -217,9 +217,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/Query'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
 
   /websites:
     post:
@@ -235,16 +235,16 @@ paths:
             schema:
               $ref: '#/components/schemas/PublicWebsite'
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Website'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /websites/{websiteId}:
     get:
       tags:
@@ -259,16 +259,16 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Website'
         404:
-          $ref: '#/components/responses/NotFoundException'
+          $ref: '#/components/responses/StatusMessage404'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
     put:
       tags:
         - "websites"
@@ -289,12 +289,12 @@ paths:
             schema:
               $ref: '#/components/schemas/PublicWebsite'
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
     delete:
       tags:
         - "websites"
@@ -309,12 +309,12 @@ paths:
         required: true
         description: Website Id of the website to delete
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /accounts/search:
     post:
       tags:
@@ -332,9 +332,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/Account'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /accounts/login/{firebaseIdToken}:
     post:
       tags:
@@ -349,16 +349,16 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /accounts/switch/{accountId}:
     post:
       tags:
@@ -373,16 +373,16 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /slack/teams:
     post:
       tags:
@@ -398,12 +398,12 @@ paths:
             schema:
               $ref: '#/components/schemas/SlackTeam'
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /slack/teams/{slackTeamId}:
     get:
       tags:
@@ -418,16 +418,16 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SlackTeam'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
     put:
       tags:
         - "slack"
@@ -448,12 +448,12 @@ paths:
             schema:
               $ref: '#/components/schemas/SlackTeam'
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /analytics/charts:
     get:
       tags:
@@ -462,16 +462,16 @@ paths:
       description: ""
       operationId: "getCharts"
       responses:
-        "200":
+        200:
           description: "success"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Chart'
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
     post:
       tags:
         - "analytics"
@@ -486,12 +486,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Chart'
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /analytics/charts/{chartId}:
     put:
       tags:
@@ -513,12 +513,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Chart'
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
     delete:
       tags:
         - "analytics"
@@ -532,12 +532,12 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
   /analytics/charts/data:
     post:
       tags:
@@ -553,12 +553,12 @@ paths:
             schema:
               $ref: '#/components/schemas/ChartMetrics'
       responses:
-        "200":
+        200:
           description: "success"
         400:
-          $ref: '#/components/responses/ValidationException'
+          $ref: '#/components/responses/StatusMessage400'
         500:
-          $ref: '#/components/responses/InternalErrorException'
+          $ref: '#/components/responses/StatusMessage500'
 
 components:
   securitySchemes:
@@ -569,78 +569,74 @@ components:
 
 
   responses:
-    ValidationException:
+    StatusMessage400:
       description: Invalid request
       content:
         application/json:
           schema:
             type: object
+            required:
+              - status
+              - message
+              - errors
             properties:
-              error:
-                type: string
-                nullable: false
-              errors:
-                type: object
-                nullable: false
-              message:
-                type: string
-                nullable: false
-              path:
-                type: string
-                nullable: false
               status:
                 type: integer
                 enum: [400]
                 nullable: false
-              timestamp:
+              message:
                 type: string
                 nullable: false
-    InternalErrorException:
+              errors:
+                type: array
+                nullable: false
+                items: {}
+
+    StatusMessage404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - message
+              - errors
+            properties:
+              status:
+                type: integer
+                enum: [404]
+                nullable: false
+              message:
+                type: string
+                nullable: false
+              errors:
+                type: array
+                nullable: false
+                items: {}
+
+    StatusMessage500:
       description: Internal error
       content:
         application/json:
           schema:
             type: object
+            required:
+              - status
+              - message
+              - errors
             properties:
-              error:
-                type: string
-                nullable: false
-              message:
-                type: string
-                nullable: false
-              path:
-                type: string
-                nullable: false
               status:
                 type: integer
                 enum: [500]
                 nullable: false
-              timestamp:
-                type: string
-                nullable: false
-    NotFoundException:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                nullable: false
               message:
                 type: string
                 nullable: false
-              path:
-                type: string
+              errors:
+                type: array
                 nullable: false
-              status:
-                type: integer
-                enum: [404]
-                nullable: false
-              timestamp:
-                type: string
-                nullable: false
+                items: {}
 
   schemas:
     Account:
