@@ -287,7 +287,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Website'
+              $ref: '#/components/schemas/PublicWebsite'
       responses:
         "200":
           description: "success"
