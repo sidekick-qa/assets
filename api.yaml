@@ -1363,15 +1363,20 @@ components:
           nullable: false
 
     ResponseBodyWebsitesSearch:
-      type: array
-      items:
-        type: object
-        required:
-          - website
-          - organization
-        properties:
-          website:
-            $ref: '#/components/schemas/Website'
-          organization:
-            $ref: '#/components/schemas/Organization'
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+              - website
+              - organization
+            properties:
+              website:
+                $ref: '#/components/schemas/Website'
+              organization:
+                $ref: '#/components/schemas/Organization'
 
