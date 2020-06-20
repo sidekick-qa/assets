@@ -574,71 +574,59 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - status
-              - message
-              - errors
-            properties:
-              status:
-                type: integer
-                enum: [400]
-                nullable: false
-              message:
-                type: string
-                nullable: false
-              errors:
-                type: array
-                nullable: false
-                items: {}
+            allOf:
+            - $ref: '#/components/schemas/StatusMessage'
+            - properties:
+                status:
+                  type: integer
+                  enum: [400]
+                  nullable: false
 
     StatusMessage404:
       description: Not found
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - status
-              - message
-              - errors
-            properties:
-              status:
-                type: integer
-                enum: [404]
-                nullable: false
-              message:
-                type: string
-                nullable: false
-              errors:
-                type: array
-                nullable: false
-                items: {}
+            allOf:
+            - $ref: '#/components/schemas/StatusMessage'
+            - properties:
+                status:
+                  type: integer
+                  enum: [404]
+                  nullable: false
 
     StatusMessage500:
       description: Internal error
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - status
-              - message
-              - errors
-            properties:
-              status:
-                type: integer
-                enum: [500]
-                nullable: false
-              message:
-                type: string
-                nullable: false
-              errors:
-                type: array
-                nullable: false
-                items: {}
+            allOf:
+            - $ref: '#/components/schemas/StatusMessage'
+            - properties:
+                status:
+                  type: integer
+                  enum: [500]
+                  nullable: false
 
   schemas:
+    StatusMessage:
+      type: object
+      required:
+        - status
+        - message
+        - errors
+      properties:
+        status:
+          type: integer
+          nullable: false
+        message:
+          type: string
+          nullable: false
+        errors:
+          type: array
+          nullable: false
+          items:
+            nullable: false
     Account:
       type: object
       required:
