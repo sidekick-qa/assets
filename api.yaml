@@ -1373,12 +1373,9 @@ components:
             type: object
             required:
               - website
-              - organization
             properties:
               website:
                 $ref: '#/components/schemas/Website'
               organization:
-                allOf:
-                  - $ref: '#/components/schemas/Organization'
-                  - nullable: true
+                $ref: '#/components/schemas/Organization'
 
