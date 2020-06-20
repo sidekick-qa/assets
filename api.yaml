@@ -1378,5 +1378,7 @@ components:
               website:
                 $ref: '#/components/schemas/Website'
               organization:
-                $ref: '#/components/schemas/Organization'
+                allOf:
+                  - $ref: '#/components/schemas/Organization'
+                  - nullable: true
 
