@@ -627,6 +627,7 @@ components:
           nullable: false
           items:
             nullable: false
+            type: object
     Account:
       type: object
       required:
