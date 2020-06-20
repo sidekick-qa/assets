@@ -383,28 +383,7 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
-  /slack/teams:
-    post:
-      tags:
-        - "slack"
-      summary: "Add slack integration."
-      description: ""
-      operationId: "addSlackTeam"
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SlackTeam'
-      responses:
-        200:
-          description: "success"
-        400:
-          $ref: '#/components/responses/StatusMessage400'
-        500:
-          $ref: '#/components/responses/StatusMessage500'
-  /slack/teams/{slackTeamId}:
+  /slack/teams/{teamId}:
     get:
       tags:
         - "slack"
@@ -413,10 +392,40 @@ paths:
       operationId: "getSlackTeam"
       parameters:
         - in: path
-          name: slackTeamId
+          name: teamId
           schema:
             type: string
           required: true
+      responses:
+        200:
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlackTeam'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+    post:
+      tags:
+        - "slack"
+      summary: "Add slack integration."
+      description: ""
+      operationId: "addSlackTeam"
+      parameters:
+        - in: path
+          name: teamId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicSlackTeam'
       responses:
         200:
           description: "success"
@@ -436,7 +445,7 @@ paths:
       operationId: "updateSlackTeam"
       parameters:
         - in: path
-          name: slackTeamId
+          name: teamId
           schema:
             type: string
           required: true
@@ -446,10 +455,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SlackTeam'
+              $ref: '#/components/schemas/PublicSlackTeam'
       responses:
         200:
           description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlackTeam'
         400:
           $ref: '#/components/responses/StatusMessage400'
         500:
@@ -819,7 +832,7 @@ components:
             question:
               $ref: '#/components/schemas/Question'
 
-    SlackTeam:
+    PublicSlackTeam:
       type: object
       required:
         - accessToken
@@ -830,9 +843,6 @@ components:
         - botName
         - botUserId
         - enterpriseId
-        - id
-        - subdomain
-        - teamId
         - teamName
       properties:
         accessToken:
@@ -859,18 +869,20 @@ components:
         enterpriseId:
           type: string
           nullable: true
-        id:
-          type: string
-          nullable: false
-        subdomain:
-          type: string
-          nullable: false
-        teamId:
-          type: string
-          nullable: false
         teamName:
           type: string
           nullable: false
+
+    SlackTeam:
+      allOf:
+        - $ref: '#/components/schemas/PublicSlackTeam'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              nullable: false
 
     PublicWebsite:
       type: object
