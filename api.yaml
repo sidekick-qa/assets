@@ -317,6 +317,32 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
+
+  /websites/search:
+    post:
+      tags:
+        - websites
+      summary: Search through websites
+      operationId: searchWebsites
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyWebsitesSearch'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBodyWebsitesSearch'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+
   /organizations:
     post:
       tags:
@@ -371,6 +397,53 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
+
+  /organizations/websites/{websiteId}:
+    post:
+      tags:
+        - organizations
+      summary: Add an organization website.
+      operationId: addOrganizationWebsite
+      parameters:
+        - in: path
+          name: websiteId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+    delete:
+      tags:
+        - organizations
+      summary: Remove an organization website.
+      operationId: removeOrganizationWebsite
+      parameters:
+        - in: path
+          name: websiteId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+
   /organizations/accounts/{accountId}:
     delete:
       tags:
@@ -1022,6 +1095,7 @@ components:
     PublicWebsite:
       type: object
       required:
+        - accountId
         - callToActionExists
         - callToActionLink
         - canSearchWeb
@@ -1031,6 +1105,9 @@ components:
         - subdomain
         - otherSubdomains
       properties:
+        accountId:
+          type: string
+          nullable: false
         callToActionExists:
           type: boolean
           nullable: false
@@ -1072,31 +1149,33 @@ components:
           nullable: false
 
     Organization:
-      type: object
-      required:
-        - id
-        - ownerAccountIds
-        - memberAccountIds
-        - websiteIds
-      properties:
-        id:
-          type: string
-          nullable: false
-        ownerAccountIds:
-          nullable: false
-          type: array
-          items:
-            type: string
-        memberAccountIds:
-          nullable: false
-          type: array
-          items:
-            type: string
-        websiteIds:
-          nullable: false
-          type: array
-          items:
-            type: string
+      allOf:
+        - $ref: '#/components/schemas/PublicOrganization'
+        - type: object
+          required:
+            - id
+            - ownerAccountIds
+            - memberAccountIds
+            - websiteIds
+          properties:
+            id:
+              type: string
+              nullable: false
+            ownerAccountIds:
+              nullable: false
+              type: array
+              items:
+                type: string
+            memberAccountIds:
+              nullable: false
+              type: array
+              items:
+                type: string
+            websiteIds:
+              nullable: false
+              type: array
+              items:
+                type: string
 
     Website:
       allOf:
@@ -1271,3 +1350,29 @@ components:
           type: boolean
           nullable: true
 
+    RequestBodyWebsitesSearch:
+      type: object
+      required:
+        - accountId
+      properties:
+        accountId:
+          type: string
+          nullable: false
+        text:
+          type: string
+          nullable: false
+
+    ResponseBodyWebsitesSearch:
+      type: array
+      items:
+        type: object
+        required:
+          - website
+          - organization
+        properties:
+          website:
+            $ref: '#/components/schemas/Website'
+            nullable: false
+          organization:
+            $ref: '#/components/schemas/Organization'
+            nullable: true
