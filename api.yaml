@@ -1372,7 +1372,5 @@ components:
         properties:
           website:
             $ref: '#/components/schemas/Website'
-            nullable: false
           organization:
             $ref: '#/components/schemas/Organization'
-            nullable: true
