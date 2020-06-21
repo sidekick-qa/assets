@@ -398,13 +398,18 @@ paths:
         500:
           $ref: '#/components/responses/StatusMessage500'
 
-  /organizations/websites/{websiteId}:
+  /organizations/{organizationId}/websites/{websiteId}:
     post:
       tags:
         - organizations
       summary: Add an organization website.
       operationId: addOrganizationWebsite
       parameters:
+        - in: path
+          name: organizationId
+          schema:
+            type: string
+          required: true
         - in: path
           name: websiteId
           schema:
@@ -428,6 +433,11 @@ paths:
       operationId: removeOrganizationWebsite
       parameters:
         - in: path
+          name: organizationId
+          schema:
+            type: string
+          required: true
+        - in: path
           name: websiteId
           schema:
             type: string
@@ -444,7 +454,7 @@ paths:
         500:
           $ref: '#/components/responses/StatusMessage500'
 
-  /organizations/accounts/{accountId}:
+  /organizations/{organizationId}/accounts/{accountId}:
     delete:
       tags:
         - organizations
@@ -452,29 +462,10 @@ paths:
       operationId: deleteOrganizationAccount
       parameters:
         - in: path
-          name: accountId
+          name: organizationId
           schema:
             type: string
           required: true
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization'
-        400:
-          $ref: '#/components/responses/StatusMessage400'
-        500:
-          $ref: '#/components/responses/StatusMessage500'
-
-  /organizations/accounts/owners/{accountId}:
-    post:
-      tags:
-        - organizations
-      summary: Add an owner account.
-      operationId: addOrganizationOwner
-      parameters:
         - in: path
           name: accountId
           schema:
@@ -492,13 +483,47 @@ paths:
         500:
           $ref: '#/components/responses/StatusMessage500'
 
-  /organizations/accounts/members/{accountId}:
+  /organizations/{organizationId}/accounts/owners/{accountId}:
+    post:
+      tags:
+        - organizations
+      summary: Add an owner account.
+      operationId: addOrganizationOwner
+      parameters:
+        - in: path
+          name: organizationId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+
+  /organizations/{organizationId}/accounts/members/{accountId}:
     post:
       tags:
         - organizations
       summary: Add a member account.
       operationId: addOrganizationMember
       parameters:
+        - in: path
+          name: organizationId
+          schema:
+            type: string
+          required: true
         - in: path
           name: accountId
           schema:
