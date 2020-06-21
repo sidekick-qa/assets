@@ -24,6 +24,8 @@ tags:
   description: "Metrics."
 - name: "organizations"
   description: "A group of users who share websites."
+- name: interactions
+  description: An interaction with the system stored for analytics purposes.
 paths:
   /questions:
     post:
@@ -616,6 +618,31 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
+  /interactions:
+    post:
+      tags:
+      - "interactions"
+      summary: "Record an interaction."
+      description: ""
+      operationId: "recordInteraction"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicInteraction'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interaction'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
   /slack/teams/{teamId}:
     get:
       tags:
@@ -805,6 +832,7 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
+
 
 components:
   securitySchemes:
@@ -1033,6 +1061,11 @@ components:
       enum: [web, slack]
       nullable: false
 
+    InteractionType:
+      type: string
+      enum: [query, visitWebsite, clickCTA, openWidget, closeWidget]
+      nullable: false
+
     Query:
       allOf:
         - $ref: '#/components/schemas/PublicQuery'
@@ -1064,6 +1097,45 @@ components:
                 type: string
             question:
               $ref: '#/components/schemas/Question'
+
+    PublicInteraction:
+      type: object
+      required:
+        - interactionType
+        - timestamp
+        - visitorId
+        - type
+        - location
+        - source
+        - meta
+      properties:
+        interactionType:
+          $ref: '#/components/schemas/InteractionType'
+        timestamp:
+          type: integer
+          nullable: false
+        visitorId:
+          type: string
+          nullable: false
+        location:
+          type: string
+          nullable: false
+        source:
+          $ref: '#/components/schemas/QuerySource'
+        meta:
+          type: string
+          nullable: false
+
+    Interaction:
+      allOf:
+        - $ref: '#/components/schemas/PublicInteraction'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              nullable: false
 
     PublicSlackTeam:
       type: object
