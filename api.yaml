@@ -1124,7 +1124,7 @@ components:
           $ref: '#/components/schemas/QuerySource'
         meta:
           type: string
-          nullable: false
+          nullable: true
 
     Interaction:
       allOf:
