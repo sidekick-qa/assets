@@ -24,8 +24,6 @@ tags:
   description: "Metrics."
 - name: "organizations"
   description: "A group of users who share websites."
-- name: interactions
-  description: An interaction with the system stored for analytics purposes.
 paths:
   /questions:
     post:
@@ -618,31 +616,6 @@ paths:
           $ref: '#/components/responses/StatusMessage400'
         500:
           $ref: '#/components/responses/StatusMessage500'
-  /interactions:
-    post:
-      tags:
-      - "interactions"
-      summary: "Record an interaction."
-      description: ""
-      operationId: "recordInteraction"
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PublicInteraction'
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Interaction'
-        400:
-          $ref: '#/components/responses/StatusMessage400'
-        500:
-          $ref: '#/components/responses/StatusMessage500'
   /slack/teams/{teamId}:
     get:
       tags:
@@ -723,6 +696,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SlackTeam'
+        400:
+          $ref: '#/components/responses/StatusMessage400'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
+  /analytics/interactions:
+    post:
+      tags:
+      - "analytics"
+      summary: "Record an interaction."
+      description: An interaction with the system stored for analytics purposes.
+      operationId: "recordInteraction"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicInteraction'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interaction'
         400:
           $ref: '#/components/responses/StatusMessage400'
         500:
