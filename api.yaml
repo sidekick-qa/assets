@@ -1100,7 +1100,6 @@ components:
       type: object
       required:
         - interactionType
-        - timestamp
         - visitorId
         - type
         - location
@@ -1109,9 +1108,6 @@ components:
       properties:
         interactionType:
           $ref: '#/components/schemas/InteractionType'
-        timestamp:
-          type: integer
-          nullable: false
         visitorId:
           type: string
           nullable: false
@@ -1130,9 +1126,13 @@ components:
         - type: object
           required:
             - id
+            - timestamp
           properties:
             id:
               type: string
+              nullable: false
+            timestamp:
+              type: integer
               nullable: false
 
     PublicSlackTeam:
