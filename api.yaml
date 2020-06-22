@@ -1065,7 +1065,7 @@ components:
 
     InteractionType:
       type: string
-      enum: [query, visitWebsite, clickCTA, openWidget, closeWidget]
+      enum: [query, visitWebsite, clickCTA, openWidget, closeWidget, openQuestion, closeQuestion]
       nullable: false
 
     Query:
@@ -1110,6 +1110,9 @@ components:
         - source
         - meta
       properties:
+        websiteId:
+          type: string
+          nullable: false
         interactionType:
           $ref: '#/components/schemas/InteractionType'
         visitorId:
@@ -1201,7 +1204,7 @@ components:
       properties:
         name:
           type: string
-          nullable: false
+          nullable: true
         source:
           $ref: '#/components/schemas/QuerySource'
         photoUrl:
@@ -1241,6 +1244,9 @@ components:
         accountId:
           type: string
           nullable: false
+        callToActionText:
+          type: string
+          nullable: false
         callToActionExists:
           type: boolean
           nullable: false
@@ -1267,6 +1273,18 @@ components:
           type: array
           items:
             type: string
+
+    Website:
+      allOf:
+        - $ref: '#/components/schemas/PublicWebsite'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              nullable: false
+
 
     PublicOrganization:
       type: object
@@ -1309,18 +1327,6 @@ components:
               type: array
               items:
                 type: string
-
-    Website:
-      allOf:
-        - $ref: '#/components/schemas/PublicWebsite'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-              nullable: false
-
     Chart:
       type: object
       properties:
