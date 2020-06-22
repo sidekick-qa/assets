@@ -939,8 +939,8 @@ components:
         - websiteId
         - questionText
         - answerText
-        - certified
-        - featured
+        - isCertified
+        - isFeatured
         - link
         - searchLinks
         - searchSnippets
@@ -955,10 +955,10 @@ components:
         answerText:
           type: string
           nullable: true
-        certified:
+        isCertified:
           type: boolean
           nullable: false
-        featured:
+        isFeatured:
           type: boolean
           nullable: false
         link:
@@ -1382,10 +1382,10 @@ components:
         - pageSize
         - pageNum
       properties:
-        certified:
+        isCertified:
           type: boolean
           nullable: false
-        featured:
+        isFeatured:
           type: boolean
           nullable: false
         text:
