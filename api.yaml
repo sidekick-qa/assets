@@ -945,6 +945,7 @@ components:
         - searchLinks
         - searchSnippets
         - searchTitles
+        - intent
       properties:
         websiteId:
           type: string
@@ -980,6 +981,9 @@ components:
             type: string
           nullable: true
         title:
+          type: string
+          nullable: true
+        intent:
           type: string
           nullable: true
 
