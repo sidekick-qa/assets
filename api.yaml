@@ -1191,6 +1191,40 @@ components:
               type: string
               nullable: false
 
+    PublicVisitor:
+      type: object
+      required:
+        - name
+        - source
+        - photoUrl
+        - location
+      properties:
+        name:
+          type: string
+          nullable: false
+        source:
+          $ref: '#/components/schemas/QuerySource'
+        photoUrl:
+          type: string
+          nullable: true
+        location:
+          type: string
+          nullable: true
+        isSlackGuest:
+          type: boolean
+          nullable: true
+
+    Visitor:
+      allOf:
+        - $ref: '#/components/schemas/PublicVisitor'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              nullable: false
+
     PublicWebsite:
       type: object
       required:
