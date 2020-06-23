@@ -1235,6 +1235,7 @@ components:
         - callToActionExists
         - callToActionLink
         - canSearchWeb
+        - alignment
         - color
         - contactLink
         - headerText
@@ -1254,6 +1255,9 @@ components:
           type: string
           nullable: false
         canSearchWeb:
+          type: boolean
+          nullable: false
+        alignment:
           type: boolean
           nullable: false
         color:
