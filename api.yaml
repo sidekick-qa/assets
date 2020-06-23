@@ -1427,10 +1427,14 @@ components:
     RequestBodyQuestionsSearch:
       type: object
       required:
+        - websiteId
         - text
         - pageSize
         - pageNum
       properties:
+        websiteId:
+          type: string
+          nullable: false
         isCertified:
           type: boolean
           nullable: false
