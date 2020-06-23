@@ -1259,7 +1259,6 @@ components:
           nullable: false
         alignment:
           type: string
-          enum: [left, right]
           nullable: false
         color:
           type: string
