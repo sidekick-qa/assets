@@ -105,37 +105,51 @@ paths:
         500:
           $ref: '#/components/responses/StatusMessage500'
   /questions/{questionId}/feature:
-    tags:
-      - questions
-    summary: Feature a question
-    operationId: featureQuestion
-    responses:
-      200:
-        description: Success
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Question'
-      404:
-        $ref: '#/components/responses/StatusMessage404'
-      500:
-        $ref: '#/components/responses/StatusMessage500'
+    post:
+      tags:
+        - questions
+      summary: Feature a question
+      operationId: featureQuestion
+      parameters:
+        - in: path
+          name: questionId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        404:
+          $ref: '#/components/responses/StatusMessage404'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
   /questions/{questionId}/unfeature:
-    tags:
-      - questions
-    summary: Feature a question
-    operationId: unfeatureQuestion
-    responses:
-      200:
-        description: Success
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Question'
-      404:
-        $ref: '#/components/responses/StatusMessage404'
-      500:
-        $ref: '#/components/responses/StatusMessage500'
+    post:
+      tags:
+        - questions
+      summary: Unfeature a question
+      operationId: unfeatureQuestion
+      parameters:
+        - in: path
+          name: questionId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        404:
+          $ref: '#/components/responses/StatusMessage404'
+        500:
+          $ref: '#/components/responses/StatusMessage500'
   /questions/search:
     post:
       tags:
