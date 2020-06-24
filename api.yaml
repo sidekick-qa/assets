@@ -96,10 +96,46 @@ paths:
       responses:
         200:
           description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
         404:
           $ref: '#/components/responses/StatusMessage404'
         500:
           $ref: '#/components/responses/StatusMessage500'
+  /questions/{questionId}/feature:
+    tags:
+      - questions
+    summary: Feature a question
+    operationId: featureQuestion
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      404:
+        $ref: '#/components/responses/StatusMessage404'
+      500:
+        $ref: '#/components/responses/StatusMessage500'
+  /questions/{questionId}/unfeature:
+    tags:
+      - questions
+    summary: Feature a question
+    operationId: unfeatureQuestion
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      404:
+        $ref: '#/components/responses/StatusMessage404'
+      500:
+        $ref: '#/components/responses/StatusMessage500'
   /questions/search:
     post:
       tags:
