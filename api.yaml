@@ -1516,6 +1516,12 @@ components:
         - pages
         - pageSize
       properties:
+        timestampStart:
+          type: integer
+          nullable: false
+        timestampEnd:
+          type: integer
+          nullable: false
         notAnswered:
           type: boolean
           nullable: false
