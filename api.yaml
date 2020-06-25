@@ -1514,21 +1514,32 @@ components:
       required:
         - websiteId
         - pages
+        - pageSize
       properties:
         notAnswered:
           type: boolean
+          nullable: false
         pages:
           type: integer
+          nullable: false
+        pageSize:
+          type: integer
+          nullable: false
         query:
           type: string
+          nullable: false
         toCsv:
           type: boolean
+          nullable: false
         wasHelpful:
           type: boolean
+          nullable: false
         wasNotHelpful:
           type: boolean
+          nullable: false
         websiteId:
           type: string
+          nullable: false
 
     RequestBodyQueriesHelpful:
       type: object
